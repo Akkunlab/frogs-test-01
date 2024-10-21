@@ -51,7 +51,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
         alt="Cute anime girl"
         className="mb-4 rounded object-cover"
       />
-      <pre className="whitespace-pre-wrap text-sm mb-6">{getPersonalizedMessage()}</pre>
+      <pre className="whitespace-pre-wrap text-sm mb-6 font-semibold">{getPersonalizedMessage()}</pre>
       <button
         className="w-full bg-white text-black font-semibold py-2 px-4 rounded-full transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg hover:bg-gray-100"
         onClick={onReset}
