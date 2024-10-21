@@ -19,26 +19,26 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
 
     message += `あなたにおすすめのスタイル:\n`;
     if (personalColor.includes('イエベ')) {
-      message += `- 暖色系の服やメイクがお似合いです。\n`;
+      message += `・ 暖色系の服やメイクがお似合いです。\n`;
     } else {
-      message += `- 寒色系の服やメイクがお似合いです。\n`;
+      message += `・ 寒色系の服やメイクがお似合いです。\n`;
     }
 
     if (faceType === 'キュート' || faceType === 'フレッシュ') {
-      message += `- 若々しく元気な印象を活かしたスタイルがおすすめです。\n`;
+      message += `・ 若々しく元気な印象を活かしたスタイルがおすすめです。\n`;
     } else if (faceType === 'フェミニン') {
-      message += `- 柔らかく女性らしい印象を活かしたスタイルがおすすめです。\n`;
+      message += `・ 柔らかく女性らしい印象を活かしたスタイルがおすすめです。\n`;
     } else {
-      message += `- シャープでモダンな印象を活かしたスタイルがおすすめです。\n`;
+      message += `・ シャープでモダンな印象を活かしたスタイルがおすすめです。\n`;
     }
 
     if (makeupTolerance === '盛り耐性あり') {
-      message += `- トレンドメイクや個性的なスタイルに挑戦してみましょう。\n`;
+      message += `・ トレンドメイクや個性的なスタイルに挑戦してみましょう。\n`;
     } else {
-      message += `- ナチュラルで自然体なメイクやスタイルが似合います。\n`;
+      message += `・ ナチュラルで自然体なメイクやスタイルが似合います。\n`;
     }
 
-    message += `- ${skinType}に合わせたスキンケアを心がけましょう。\n`;
+    message += `・ ${skinType}に合わせたスキンケアを心がけましょう。\n`;
 
     return message;
   };
