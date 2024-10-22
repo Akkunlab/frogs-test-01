@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import QuizPage from './components/QuizPage';
 import ResultPage from './components/ResultPage';
 
+const V2_REDIRECT_URL = 'https://magenta090721.studio.site';
 const questions = [
   {
     title: 'パーソナルカラー',
@@ -28,6 +29,15 @@ const questions = [
 function App() {
   const [currentPage, setCurrentPage] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
+  const params = new URLSearchParams(window.location.search);
+  const version = params.get('v');
+
+  // クエリv=2があり、全ての質問が終わったら他のサイトにリダイレクト
+  useEffect(() => {
+    if (version === '2' && currentPage >= questions.length) {
+      window.location.href = V2_REDIRECT_URL;
+    }
+  }, [currentPage, version]);
 
   const handleAnswer = (answer: string) => {
     setAnswers([...answers, answer]);
@@ -49,7 +59,13 @@ function App() {
       <div className="flex-grow flex items-center justify-center p-4">
         <div className="bg-transparent rounded-lg p-8 max-w-md w-full">
           {currentPage >= questions.length ? (
-            <ResultPage answers={answers} onReset={resetQuiz} />
+            version !== '2' ? (
+              <ResultPage answers={answers} onReset={resetQuiz} />
+            ) : (
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center font-bold text-xl">ローディング中...</div>
+              </div>
+            )
           ) : (
             <QuizPage
               question={questions[currentPage]}
