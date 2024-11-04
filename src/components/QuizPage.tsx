@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 
 interface QuizPageProps {
@@ -12,6 +12,12 @@ interface QuizPageProps {
 }
 
 const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, totalPages }) => {
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    setClickedIndex(null);
+  }, [currentPage]);
+
   const getPageMessage = (page: number) => {
     switch (page) {
       case 0:
@@ -46,6 +52,13 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
     }
   };
 
+  const handleClick = (index: number, option: string) => {
+    setClickedIndex(index);
+    setTimeout(() => {
+      onAnswer(option);
+    }, 1000);
+  };
+
   return (
     <div className="text-center">
       <img
@@ -59,8 +72,13 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
         {question.options.map((option, index) => (
           <button
             key={index}
-            className="w-full bg-white text-black font-semibold py-2 px-4 rounded-full transition duration-300 flex items-center justify-between shadow-md hover:shadow-lg"
-            onClick={() => onAnswer(option)}
+            className={`w-full ${
+              clickedIndex === index
+                ? 'bg-gradient-to-r from-pink-600 to-pink-400 text-white transform scale-95'
+                : 'bg-white text-black'
+            } font-semibold py-2 px-4 rounded-full transition duration-500 ease-out flex items-center justify-between shadow-md`}
+            onClick={() => handleClick(index, option)}
+            style={{ transition: 'transform 0.5s, background-color 0.5s' }}
           >
             <span>{option}</span>
             <ChevronRight className="w-5 h-5" />
