@@ -7,9 +7,20 @@ interface ResultPageProps {
 }
 
 const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
-  const getPersonalizedMessage = () => {
-    const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType] = answers;
+  const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType] = answers;
 
+
+  const getImageUrl = () => {
+    if (personalColor === 'イエベ春' && secondPersonalColor === 'ブルベ夏') {
+      return '/iebe_spring_blube_summer.png';
+    } else if (personalColor === 'イエベ春' && secondPersonalColor === 'イエベ秋') {
+      return '/iebe_spring_iebe_autumn.png';
+    } else {
+      return 'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp';
+    }
+  };
+
+  const getPersonalizedMessage = () => {
     let message = `あなたのパーソナルスタイル分析結果:\n\n`;
     message += `パーソナルカラー: ${personalColor}\n`;
     message += `2ndパーソナルカラー: ${secondPersonalColor}\n`;
@@ -47,8 +58,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
     <div>
       <h2 className="text-2xl font-bold mb-4 text-center">分析結果</h2>
       <img
-        src="https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp"
-        alt="Cute anime girl"
+        src={getImageUrl()}
+        alt="Personalized result"
         className="mb-4 rounded object-cover"
       />
       <pre className="whitespace-pre-wrap text-sm mb-6 font-semibold">{getPersonalizedMessage()}</pre>
