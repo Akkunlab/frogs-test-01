@@ -56,7 +56,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
     setClickedIndex(index);
     setTimeout(() => {
       onAnswer(option);
-    }, 1000);
+    }, 500);
   };
 
   return (
@@ -66,8 +66,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
         alt="Cute anime girl"
         className="rounded object-cover mb-4"
       />
-      <h2 className="text-2xl font-bold mb-4">{question.title}</h2>
-      <p className="text-black-600 mb-6 font-bold">{getPageMessage(currentPage)}</p>
+      <h2 className="text-2xl font-bold mb-4 text-black">{question.title}</h2>
+      <p className="text-black mb-6 font-bold">{getPageMessage(currentPage)}</p>
       <div className="space-y-4">
         {question.options.map((option, index) => (
           <button
@@ -85,9 +85,38 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
           </button>
         ))}
       </div>
-      <div className="mt-8 text-gray-500">
+      <div className="mt-8 text-gray-500 text-black">
         {currentPage + 1} / {totalPages}
       </div>
+      <QASection currentPage={currentPage} />
+    </div>
+  );
+};
+
+interface QASectionProps {
+  currentPage: number;
+}
+
+const QASection: React.FC<QASectionProps> = ({ currentPage }) => {
+  const qaItems = [
+    { question: "Q1. 1stパーソナルカラーとは？", answer: "自分に一番似合う色のタイプのことです。肌、瞳、髪の色などによって分かります。分からない人は外部サイトなどで診断してみてね♪" },
+    { question: "Q2. 2ndパーソナルカラーとは？", answer: "自分に一番似合う色のタイプのことです。肌、瞳、髪の色などによって分かります。分からない人は外部サイトなどで診断してみてね♪" },
+    { question: "Q3. 顔タイプとは？", answer: "自分の顔のタイプのこと。顔の輪郭やパーツの特徴などから分かります。分からない人は外部サイトなどで診断してみてね♪" },
+    { question: "Q4. 盛り耐性とは？", answer: "華やかさを盛るメイクが似合うか、飾りすぎないメイクが似合うかによって分けられるものです。分からない人は外部サイトなどで診断してみてね♪" },
+    { question: "Q5. 肌タイプとは？", answer: "水分と皮脂、それぞれの量のバランスによって分けられる肌のタイプのことです。分からない人は外部サイトなどで診断してみてね♪" },
+  ];
+
+  const currentQA = qaItems[currentPage];
+
+  return (
+    <div className="mt-10 text-left text-white" style={{ textShadow: '1px 1px 5px black' }}>
+      <h3 className="text-xl font-bold mb-4">Q&A</h3>
+      {currentQA && (
+        <div className="space-y-3">
+          <strong className="text-lg font-bold">{currentQA.question}</strong>
+          <p className="font-bold">{currentQA.answer}</p>
+        </div>
+      )}
     </div>
   );
 };
