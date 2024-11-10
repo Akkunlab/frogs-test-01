@@ -54,7 +54,11 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: 'linear-gradient(126deg, #ff8fb5, #eac0ec)' }}>
+    <div className="min-h-screen flex flex-col" style={{
+      background: 'linear-gradient(126deg, #ff8fb5, #eac0ec)',
+      minHeight: '100vh',
+      overflow: 'hidden'
+    }}>
       <div className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-2">
           <img src="logo.png" alt="Logo" className="h-10" />
