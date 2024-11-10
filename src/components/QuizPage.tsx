@@ -30,6 +30,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
         return '盛り耐性を選んでね';
       case 4:
         return 'あなたにあう選択肢を選んでね！';
+      case 5:
+        return '自分が今日したいメイクのイメージを選んでね！';
       default:
         return 'あなたにあう選択肢を選んでね！';
     }
@@ -47,6 +49,8 @@ const QuizPage: React.FC<QuizPageProps> = ({ question, onAnswer, currentPage, to
         return 'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_5cfb3a7d-09d2-420d-b32e-7f05434af11f.webp';
       case 4:
         return 'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_bb5bf21a-b958-4483-8e89-e280a49049b5.webp';
+      case 5:
+        return 'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_5cfb3a7d-09d2-420d-b32e-7f05434af11f.webp';
       default:
         return 'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp';
     }
@@ -106,19 +110,23 @@ const QASection: React.FC<QASectionProps> = ({ currentPage }) => {
     { question: "Q5. 肌タイプとは？", answer: "水分と皮脂、それぞれの量のバランスによって分けられる肌のタイプのことです。分からない人は外部サイトなどで診断してみてね♪" },
   ];
 
-  const currentQA = qaItems[currentPage];
+  const currentQA = currentPage < qaItems.length ? qaItems[currentPage] : null;
 
   return (
     <div className="mt-10 text-left text-white" style={{ textShadow: '1px 1px 5px black' }}>
-      <h3 className="text-xl font-bold mb-4">Q&A</h3>
+      
       {currentQA && (
-        <div className="space-y-3">
-          <strong className="text-lg font-bold">{currentQA.question}</strong>
-          <p className="font-bold">{currentQA.answer}</p>
-        </div>
+        <>
+          <h3 className="text-xl font-bold mb-4">Q&A</h3>
+          <div className="space-y-3">
+            <strong className="text-lg font-bold">{currentQA.question}</strong>
+            <p className="font-bold">{currentQA.answer}</p>
+          </div>
+        </>
       )}
     </div>
   );
 };
+
 
 export default QuizPage;

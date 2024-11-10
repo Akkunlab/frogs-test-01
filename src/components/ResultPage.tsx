@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefreshCw } from 'lucide-react';
 
 interface ResultPageProps {
@@ -7,17 +7,23 @@ interface ResultPageProps {
 }
 
 const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
-  const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType] = answers;
+  const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType, image] = answers;
+  
+  const images = [
+    '/iebe_spring_blube_summer.png',
+    '/iebe_spring_iebe_autumn.png',
+    'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp'
+  ];
 
+  const [imageIndex, setImageIndex] = useState(0);
+  const [isFading, setIsFading] = useState(false);
 
-  const getImageUrl = () => {
-    if (personalColor === 'イエベ春' && secondPersonalColor === 'ブルベ夏') {
-      return '/iebe_spring_blube_summer.png';
-    } else if (personalColor === 'イエベ春' && secondPersonalColor === 'イエベ秋') {
-      return '/iebe_spring_iebe_autumn.png';
-    } else {
-      return 'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp';
-    }
+  const handleImageChange = () => {
+    setIsFading(true);
+    setTimeout(() => {
+      setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setIsFading(false);
+    }, 500); // 500msのフェードアウトとイン
   };
 
   const getPersonalizedMessage = () => {
@@ -26,7 +32,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
     message += `2ndパーソナルカラー: ${secondPersonalColor}\n`;
     message += `顔タイプ: ${faceType}\n`;
     message += `盛り耐性: ${makeupTolerance}\n`;
-    message += `肌タイプ: ${skinType}\n\n`;
+    message += `肌タイプ: ${skinType}\n`;
+    message += `イメージ: ${image}\n\n`;
 
     message += `あなたにおすすめのスタイル:\n`;
     if (personalColor.includes('イエベ')) {
@@ -58,10 +65,16 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
     <div>
       <h2 className="text-2xl font-bold mb-4 text-center">分析結果</h2>
       <img
-        src={getImageUrl()}
+        src={images[imageIndex]}
         alt="Personalized result"
-        className="mb-4 rounded object-cover"
+        className={`mb-4 rounded object-cover transition-opacity duration-500 ease-in-out ${isFading ? 'opacity-0' : 'opacity-100'}`}
       />
+      <button
+        className="w-full bg-gradient-to-r from-pink-600 to-pink-400 transform text-white font-semibold py-2 px-4 rounded-full transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg mb-4"
+        onClick={handleImageChange}
+      >
+        他のバリエーションも見てみる
+      </button>
       <pre className="whitespace-pre-wrap text-sm mb-6 font-semibold">{getPersonalizedMessage()}</pre>
       <button
         className="w-full bg-white text-black font-semibold py-2 px-4 rounded-full transition duration-300 flex items-center justify-center shadow-md hover:shadow-lg hover:bg-gray-100"

@@ -24,6 +24,10 @@ const questions = [
     title: '肌タイプ',
     options: ['乾燥肌', '普通肌', '混合肌', '脂性肌'],
   },
+  {
+    title: 'どんなメイクがしたい？',
+    options: ['多幸感のあるメイク', '自然で清楚なメイク', '可愛らしい甘めなメイク', '華やかで大人なメイク'],
+  },
 ];
 
 function App() {
@@ -56,8 +60,8 @@ function App() {
           <img src="logo.png" alt="Logo" className="h-10" />
         </div>
       </div>
-      <div className="flex-grow flex items-center justify-center p-4">
-        <div className="bg-transparent rounded-lg p-8 max-w-md w-full">
+      <div className="flex-grow flex items-center justify-center p-6 mb-8">
+        <div className="bg-transparent rounded-lg max-w-md w-full">
           {currentPage >= questions.length ? (
             version !== '2' ? (
               <ResultPage answers={answers} onReset={resetQuiz} />
