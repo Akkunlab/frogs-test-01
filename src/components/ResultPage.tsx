@@ -20,8 +20,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
       ];
     }
   };
-  
-  const [images] = useState([getImageUrls()]);
+
+  const [images] = useState(getImageUrls());
   const [imageIndex, setImageIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
