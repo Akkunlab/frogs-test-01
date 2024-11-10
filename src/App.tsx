@@ -60,7 +60,7 @@ function App() {
           <img src="logo.png" alt="Logo" className="h-10" />
         </div>
       </div>
-      <div className="flex-grow flex items-center justify-center p-6 mb-8">
+      <div className="flex-grow flex items-center justify-center p-4 mb-8">
         <div className="bg-transparent rounded-lg max-w-md w-full">
           {currentPage >= questions.length ? (
             version !== '2' ? (
