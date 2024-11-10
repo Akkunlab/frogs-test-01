@@ -8,30 +8,34 @@ interface ResultPageProps {
 
 const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
   const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType, image] = answers;
-  
-  const images = [
-    '/iebe_spring_blube_summer.webp',
-    '/iebe_spring_iebe_autumn.webp',
-    'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp'
-  ];
 
+  const getImageUrls = () => {
+    if (personalColor === 'イエベ春' && secondPersonalColor === 'ブルベ夏') {
+      return ['/iebe_spring_blube_summer.webp'];
+    } else if (personalColor === 'イエベ春' && secondPersonalColor === 'イエベ秋') {
+      return ['/iebe_spring_iebe_autumn.webp'];
+    } else {
+      return [
+        'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp',
+      ];
+    }
+  };
+  
+  const [images] = useState([getImageUrls()]);
   const [imageIndex, setImageIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
   const handleImageChange = () => {
     setIsFading(true);
-    
-    // まずフェードアウトをしてから、画像の切り替えとフェードインを行う
+
     setTimeout(() => {
       setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-      
-      // 画像が切り替わってからフェードインを開始する
+
       setTimeout(() => {
         setIsFading(false);
-      }, 100); // 100ms程度の遅延でフェードインを行う
-    }, 500); // 500msのフェードアウト時間
+      }, 100);
+    }, 500);
   };
-  
 
   const getPersonalizedMessage = () => {
     let message = `あなたのパーソナルスタイル分析結果:\n\n`;
@@ -64,23 +68,6 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
     }
 
     message += `・ ${skinType}に合わせたスキンケアを心がけましょう。\n`;
-
-    switch (image) {
-      case '多幸感のあるメイク':
-        message += `・ 幸せな印象を引き立てる明るい色調のメイクがぴったりです。\n`;
-        break;
-      case '自然で清楚なメイク':
-        message += `・ シンプルで清潔感のあるメイクで、ナチュラルな美しさを活かしましょう。\n`;
-        break;
-      case '可愛らしい甘めなメイク':
-        message += `・ 柔らかいピンク系のメイクで、かわいらしい雰囲気を演出しましょう。\n`;
-        break;
-      case '華やかで大人なメイク':
-        message += `・ 鮮やかな色調で大人っぽい華やかさを引き出すメイクがおすすめです。\n`;
-        break;
-      default:
-        break;
-    }
 
     return message;
   };
