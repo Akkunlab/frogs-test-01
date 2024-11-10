@@ -10,8 +10,8 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
   const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType, image] = answers;
   
   const images = [
-    '/iebe_spring_blube_summer.png',
-    '/iebe_spring_iebe_autumn.png',
+    '/iebe_spring_blube_summer.webp',
+    '/iebe_spring_iebe_autumn.webp',
     'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp'
   ];
 
