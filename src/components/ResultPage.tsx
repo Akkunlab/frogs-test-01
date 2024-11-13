@@ -38,13 +38,10 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
 
   const handleImageChange = () => {
     setIsFading(true);
-
+  
     setTimeout(() => {
       setImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-
-      setTimeout(() => {
-        setIsFading(false);
-      }, 100);
+      setIsFading(false);
     }, 500);
   };
 
