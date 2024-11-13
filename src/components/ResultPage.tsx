@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RefreshCw } from 'lucide-react';
 
 interface ResultPageProps {
@@ -35,6 +35,13 @@ const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
   const [images] = useState(getImageUrls(personalColor, secondPersonalColor));
   const [imageIndex, setImageIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
+
+  useEffect(() => {
+    images.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, [images]);
 
   const handleImageChange = () => {
     setIsFading(true);
