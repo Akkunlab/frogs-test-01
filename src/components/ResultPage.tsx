@@ -6,22 +6,33 @@ interface ResultPageProps {
   onReset: () => void;
 }
 
-const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
-  const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType, image] = answers;
+type ColorCombination = 
+  | 'ブルベ夏_ブルベ冬'
+  | 'ブルベ夏_イエベ秋'
+  | 'ブルベ夏_イエベ春'
+  | 'イエベ秋_ブルベ夏'
+  | 'イエベ春_ブルベ夏'
+  | 'イエベ春_イエベ秋';
 
-  const getImageUrls = () => {
-    if (personalColor === 'イエベ春' && secondPersonalColor === 'ブルベ夏') {
-      return ['/iebe_spring_blube_summer.webp'];
-    } else if (personalColor === 'イエベ春' && secondPersonalColor === 'イエベ秋') {
-      return ['/iebe_spring_iebe_autumn.webp'];
-    } else {
-      return [
-        'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp',
-      ];
-    }
+const imageList: Record<ColorCombination, string[]> = {
+  'ブルベ夏_ブルベ冬': ['/blube_summer_blube_winter.webp', '/blube_summer_blube_winter2.webp'],
+  'ブルベ夏_イエベ秋': ['/blube_summer_iebe_autumn.webp', '/blube_summer_iebe_autumn2.webp'],
+  'ブルベ夏_イエベ春': ['/blube_summer_iebe_spring.webp'],
+  'イエベ秋_ブルベ夏': ['/iebe_autumn_blube_summer.webp', '/iebe_autumn_blube_summer2.webp'],
+  'イエベ春_ブルベ夏': ['/iebe_spring_blube_summer.webp'],
+  'イエベ春_イエベ秋': ['/iebe_spring_iebe_autumn.webp', '/iebe_spring_iebe_autumn2.webp'],
   };
 
-  const [images] = useState(getImageUrls());
+const getImageUrls = (personalColor: string, secondPersonalColor: string): string[] => {
+  const key = `${personalColor}_${secondPersonalColor}` as ColorCombination;
+  return imageList[key] || [
+    'https://storage.googleapis.com/studio-design-asset-files/projects/YPqrkkxLa5/s-1024x1024_d7f2548b-d294-4890-aa8a-5a642ffe14d9.webp',
+  ];
+};
+
+const ResultPage: React.FC<ResultPageProps> = ({ answers, onReset }) => {
+  const [personalColor, secondPersonalColor, faceType, makeupTolerance, skinType, image] = answers;
+  const [images] = useState(getImageUrls(personalColor, secondPersonalColor));
   const [imageIndex, setImageIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
 
